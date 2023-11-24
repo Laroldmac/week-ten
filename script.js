@@ -1,27 +1,33 @@
-function addItem(){
-    let newItemInput=document.getElementById("new-item");
-    let newItem=newItemInput.value.trim();
-
-    if (newItem !==""){
-        let groceryList=document.getElementById("grocery-list");
-        let listItem=document.createElement("li");
-        listItem.textContent=newItem;
-        groceryList.appendChild(listItem);
-
-        newItemInput.value="";
-    }else{
-        alert("Please enter a valid item!");
+function calculateMeanAndSum(numbers) {
+    if (numbers.length === 0) {
+        return { mean: NaN, sum: 0 };
     }
+
+    const sum = numbers.reduce((acc, num) => acc + num, 0);
+    const mean = sum / numbers.length;
+
+    return { mean, sum };
 }
 
-function clearList() {
-    let groceryList=document.getElementById("grocery-list");
-    groceryList.innerHTML="";
-}
-let input=document.getElementById("new-item");
+function getUserInputArray() {
+    let input = document.getElementById("numberInput").value.trim();
 
-input.addEventListener("keypress",function(event) {
-    if (event.key === "Enter") {
-        addItem();
+    if (!input) {
+        return [];
     }
-});
+
+    return input.split(',').map(Number);
+}
+
+function addItem() {
+    const userNumbers = getUserInputArray();
+    const result = calculateMeanAndSum(userNumbers);
+
+    console.log("User Input Array:", userNumbers);
+    console.log("Mean:", result.mean);
+    console.log("Sum:", result.sum);
+
+    // Display the results on the page
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = `User Input Array: ${userNumbers}\nMean: ${result.mean}\nSum: ${result.sum}`;
+}
